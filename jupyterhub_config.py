@@ -36,13 +36,6 @@ c.DockerSpawner.network_name = network_name
 # Pass the network name as argument to spawned containers
 c.DockerSpawner.extra_host_config = {
                     'network_mode': network_name,
-                    # not needed for nvidia-docker version 2
-                    #'devices': [ '/dev/nvidia-uvm:/dev/nvidia-uvm:mrw',
-                                 #'/dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools:mrw',
-                                 #'/dev/nvidia-modeset:/dev/nvidia-modeset:mrw',
-                                 #'/dev/nvidia0:/dev/nvidia0:mrw',
-                                 #'/dev/nvidia1:/dev/nvidia1:mrw', # map as many as you like
-                                 #'/dev/nvidiactl:/dev/nvidiactl:mrw'
                     ]}
 # Explicitly set notebook directory because we'll be mounting a host volume to
 # it.  Most jupyter/docker-stacks *-notebook images run the Notebook server as
@@ -55,7 +48,6 @@ c.DockerSpawner.notebook_dir= notebook_dir
 # notebook directory in the container
 
 c.DockerSpawner.volumes= {
-    #'nvidia_driver_387.34':'/usr/local/nvidia', # not needed for nvidia-docker version 2
     'jupyterhub-user-{username}': notebook_dir
 }
 
