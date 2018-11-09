@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 
 # JupyterHub docker-compose configuration file
-version:                          "2"
+version:                          "2.3"
 
 services:
   hub:
@@ -15,6 +15,7 @@ services:
         JUPYTERHUB_VERSION:       ${JUPYTERHUB_VERSION}
     restart:                      always
     image:                        jupyterhub
+    runtime:                      nvidia
     container_name:               jupyterhub
 
     volumes:
@@ -32,8 +33,8 @@ services:
       - hub-db
     environment:
       # this is just to show how to use with self signed keys use which ever you like
-      #SSL_KEY:                   "./ssl/privkey.pem"
-      #SSL_CERT:                  "./ssl/cert.pem"
+      SSL_KEY:                   ${SSL_KEY}
+      SSL_CERT:                  ${SSL_CERT}
       # All containers will join this network
       DOCKER_NETWORK_NAME:        ${DOCKER_NETWORK_NAME}
       # JupyterHub will spawn this Notebook image for users
@@ -80,14 +81,14 @@ services:
 networks:
   default:
     external:
-      name:                       ${DOCKER_NETWORK_NAME}
+      name:                       ${DOCKER_NETWORK_NAME} ## need to be created first IE `docker network create $NETWORK_NAME`
 
 
 volumes:
   data:
     external:
-      name:                       ${DATA_VOLUME_HOST} ## need to be created first
+      name:                       ${DATA_VOLUME_HOST} ## need to be created first IE `docker volume create --name=$VOLUME_NAME`
 
   db:
     external:
-      name:                       ${DB_VOLUME_HOST} ## need to be created first
+      name:                       ${DB_VOLUME_HOST} ## need to be created first IE `docker volume create --name=$VOLUME_NAME`
