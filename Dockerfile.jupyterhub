@@ -13,9 +13,11 @@ RUN /opt/conda/bin/conda install -yq psycopg2=2.7 && \
 # Copy TLS certificate and key
 ENV SSL_CERT /srv/jupyterhub/ssl/jupyterhub.crt
 ENV SSL_KEY /srv/jupyterhub/ssl/jupyterhub.key
-COPY ./ssl/*.crt $SSL_CERT
-COPY ./ssl/*.key $SSL_KEY
-RUN chmod 700 /srv/jupyterhub/secrets && \
-    chmod 600 /srv/jupyterhub/secrets/*
+COPY .ssl/jupyterhub.crt $SSL_CERT
+COPY .ssl/jupyterhub.key $SSL_KEY
+
+# set permissions correctly on all your secrets, if you have them
+#RUN chmod 700 /srv/jupyterhub/secrets && \
+#    chmod 600 /srv/jupyterhub/secrets/*
 
 COPY ./userlist /srv/jupyterhub/userlist
