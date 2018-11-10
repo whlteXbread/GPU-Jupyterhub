@@ -48,7 +48,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     qt5-default \
     libvtk6-dev \
     libopenexr-dev \
-    libgdal-dev \
     libdc1394-22-dev \
     libavcodec-dev \
     libavformat-dev \
