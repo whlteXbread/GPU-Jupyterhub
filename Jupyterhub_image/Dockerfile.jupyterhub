@@ -1,5 +1,12 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+
+# note!
+#
+# this dockerfile is not used in the build process---but it does provide
+# an example of how to add users to the jupyterhub container so it's possible
+# to use PAM authentication. Just be sure to change the password!
+
 ARG JUPYTERHUB_VERSION
 FROM jupyterhub/jupyterhub-onbuild:$JUPYTERHUB_VERSION
 
@@ -13,8 +20,8 @@ RUN /opt/conda/bin/conda install -yq psycopg2=2.7 && \
 # Copy TLS certificate and key
 ENV SSL_CERT /srv/jupyterhub/secrets/jupyterhub.crt
 ENV SSL_KEY /srv/jupyterhub/secrets/jupyterhub.key
-COPY ./ssl/*.crt $SSL_CERT
-COPY ./ssl/*.key $SSL_KEY
+COPY ./ssl/jupyterhub.crt $SSL_CERT
+COPY ./ssl/jupyterhub.key $SSL_KEY
 RUN chmod 700 /srv/jupyterhub/secrets && \
     chmod 600 /srv/jupyterhub/secrets/*
 
