@@ -62,10 +62,6 @@ RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
 
 USER $NB_USER
 
-# Setup work directory for backward-compatibility
-RUN mkdir /home/$NB_USER/work && \
-    fix-permissions /home/$NB_USER
-
 # Install conda as Deep_Learner and check the md5 sum provided on the download site
 ENV MINICONDA_VERSION 4.5.11
 RUN cd /tmp && \
@@ -91,6 +87,10 @@ RUN conda install -y \
     'six' &&\
     fix-permissions $CONDA_DIR
 
+# Setup work directory for backward-compatibility
+RUN mkdir /home/$NB_USER/work && \
+    mkdir /home/$NB_USER/data && \ 
+    fix-permissions /home/$NB_USER
 
 USER root
 
