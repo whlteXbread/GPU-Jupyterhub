@@ -16,7 +16,7 @@ c.ConfigurableHTTPProxy.auth_token = token
 c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
 
 # Spawn containers from this image
-c.DockerSpawner.container_image = os.environ['DOCKER_NOTEBOOK_IMAGE']
+c.DockerSpawner.image = os.environ['DOCKER_NOTEBOOK_IMAGE']
 
 # JupyterHub requires a single-user instance of the Notebook server, so we
 # default to using the `start-singleuser.sh` script included in the
@@ -36,19 +36,21 @@ c.DockerSpawner.network_name = network_name
 # Pass the network name as argument to spawned containers
 c.DockerSpawner.extra_host_config = {
                     'network_mode': network_name,
-                    ]}
+                    'runtime': 'nvidia'}
 # Explicitly set notebook directory because we'll be mounting a host volume to
 # it.  Most jupyter/docker-stacks *-notebook images run the Notebook server as
 # user `jovyan`, and set the notebook directory to `/home/jovyan/work`.
 # We follow the same convention.
 notebook_dir= os.environ.get('DOCKER_NOTEBOOK_DIR') or '/home/jovyan/work'
 c.DockerSpawner.notebook_dir= notebook_dir
+data_dir = os.environ.get('DOCKER_SHARED_DATA_DIR')
 
 # Mount the real user's Docker volume on the host to the notebook user's
 # notebook directory in the container
 
-c.DockerSpawner.volumes= {
-    'jupyterhub-user-{username}': notebook_dir
+c.DockerSpawner.volumes = {
+    'jupyterhub-user-{username}': notebook_dir,
+    '/ml_data': {"bind": data_dir, "mode": "ro"}
 }
 
 # Remove containers once they are stopped
@@ -64,7 +66,6 @@ c.JupyterHub.hub_port = 8080
 c.JupyterHub.port = 443
 c.JupyterHub.ssl_key = os.environ['SSL_KEY']
 c.JupyterHub.ssl_cert = os.environ['SSL_CERT']
-
 
 # Authenticate users with GitHub OAuth if you whish to do that I have a local authentication
 # c.JupyterHub.authenticator_class = 'oauthenticator.GitHubOAuthenticator'
