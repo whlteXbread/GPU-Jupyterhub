@@ -43,6 +43,8 @@ services:
       DOCKER_NOTEBOOK_IMAGE:      ${LOCAL_NOTEBOOK_IMAGE}
       # Notebook directory inside user image
       DOCKER_NOTEBOOK_DIR:        ${DOCKER_NOTEBOOK_DIR}
+      # data dir inside the user image
+      DOCKER_SHARED_DATA_DIR:     ${DOCKER_SHARED_DATA_DIR}
       # Using this run command (optional)
       DOCKER_SPAWN_CMD:           ${DOCKER_SPAWN_CMD}
       CONFIGPROXY_AUTH_TOKEN:     ${CONFIGPROXY_AUTH_TOKEN}
