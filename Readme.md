@@ -40,3 +40,15 @@ apt-get install texlive-full
 ```
 
 now your container is 4GB+ larger, but you can use latex in your plots. also you have to do this every time your container starts.
+
+### updating an ssl cert
+
+aight, so maybe you've got a fancy let's encrypt SSL cert you want to use with this thing. and maybe that cert expired. here's what you gotta do:
+
+1. make sure your server has `443` open to the world (scary, i know---you can close it back down after the next step)
+1. run `certbot` or `letsencrypt` (maybe with `--certonly`, because). for example: `sudo letsencrypt certonly --standalone -d [FQDN]`
+2. copy the keys (found in `/etc/letsencrypt/live/[FQDN]/`) to the `.ssl` dir in this repo
+3. rename the files: `fullchain.pem` -> `jupyterhub.crt`, `privkey.pem` -> `jupyterhub.key`
+4. `docker-compose down && docker-compose build && docker-compose up` to get the new keys into a new container
+
+good to go. 
