@@ -81,7 +81,7 @@ RUN cd /tmp && \
 RUN conda install -y \
     'python=3.6'  \
     'notebook=5.6.*' \
-    'jupyterhub=0.9.*' \
+    'jupyterhub=1.0.*' \
     'jupyterlab' \
     'jupyter' \
     'six' &&\

@@ -71,7 +71,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     libvips \
     libvips-dev \
-    libvips-tools && \
+    libvips-tools \ 
+    texlive-latex-extra \
+    dvipng  && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -97,20 +99,18 @@ RUN conda install --yes\
     Flask \
     scikit-image \
     scikit-learn \
-    pandas \
     tqdm \
     statsmodels \
     pydicom \
     tensorboardX \
     tensorflow-tensorboard \
     plotly \
-    seaborn \
     ipython \
     tensorflow-gpu && \
     fix-permissions $CONDA_DIR
 
 # Installing pytorch
-RUN conda install pytorch torchvision  cuda92 -c pytorch && \
+RUN conda install pytorch torchvision cudatoolkit=10.0 -c pytorch && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
 
@@ -123,6 +123,7 @@ RUN python3.6 -m pip install --upgrade --no-cache-dir \
     imgaug \
     kaggle \
     pretrainedmodels \
+    torchsummary \
     skorch && \
     fix-permissions /home/$NB_USER
 
