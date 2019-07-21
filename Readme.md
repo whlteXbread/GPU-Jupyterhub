@@ -17,6 +17,14 @@ the deep learning notebook container is still super, super huge, and could stand
 
 ### install latex so you can make good graphs
 
+*UPDATE 2019 07 21*
+
+I've updated the jupyter notebook image to include LaTeX and `dvipng`, so the following is no longer necessary.
+
+However, I'll leave the info here if anybody still has the older version.
+
+*UPDATE 2019 07 21*
+
 if you're like me, you built these things a long time ago and don't have time to rebuild and debug the build, so you want a bandaid way to get latex in your deep learning environment because you're a glutton for punishment and you need latex in your matplotlib figures.
 
 so, fun!
@@ -36,10 +44,10 @@ apt-get update
 then install texlive:
 
 ```
-apt-get install texlive-full
+apt-get install texlive-latex-extra dvipng
 ```
 
-now your container is 4GB+ larger, but you can use latex in your plots. also you have to do this every time your container starts.
+now your container is 1GB+ larger, but you can use latex in your plots. also you have to do this every time your container starts.
 
 ### updating an ssl cert
 
